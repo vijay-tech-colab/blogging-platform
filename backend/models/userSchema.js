@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    select : false
   },
   role: {
     type: String,
@@ -43,13 +44,10 @@ userSchema.pre("save", async function (next) {
     next(error);
   }
 });
-userSchema.comparePassword = async function (enteredPassword) {
-  try {
-    return await bcrypt.compare(enteredPassword,this.password);
-  } catch (error) {
-    
-  }
-}
+userSchema.methods.comparePassword = async function (enteredPassword) {
+    // Compare the entered password with the stored hashed password
+    return await bcrypt.compare(enteredPassword, this.password);
+};
 
 userSchema.methods.generateToken = function () {
   return jwt.sign(

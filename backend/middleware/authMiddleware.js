@@ -4,7 +4,8 @@ const catchAsyncError = require('./catchAsyncErrors');
 const User = require('../models/userSchema');
 
 const authMiddleware = catchAsyncError(async (req,res,next) =>{
-    const token = req.cookies;
+    const {token }= req.cookies;
+    console.log(token);
     if(!token){
         return next(new ErrorHandler("User not Athentication",400));
     }
