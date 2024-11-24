@@ -3,6 +3,7 @@ const express = require('express');
 const fileUpload = require('express-fileupload');
 const errorMiddleware = require('./middleware/errorMiddleWare');
 const userRouter = require('./routers/userRouter');
+const blogRouter = require('./routers/blogRouter');
 const app = express();
 require('dotenv').config({path : './config/config.env'});
 app.use(express.json());
@@ -13,5 +14,6 @@ app.use(fileUpload({
     tempFileDir: './tmp', // Temporary directory for storing files
 }));
 app.use("/auth/user",userRouter);
+app.use("/auth/blog",blogRouter);
 app.use(errorMiddleware); // global error handler
 module.exports = app;
